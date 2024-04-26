@@ -1,0 +1,32 @@
+<%= turbo_stream_from "outages" %>
+
+<div class="flex justify-between align-baseline mt-4">
+  <h1>Outages</h1>
+
+  <div align="right">
+    <%= link_to "Fetch", fetch_outages_path, id: 'btn', class: 'btn btn-primary', align: 'right' %>
+    <div class="valid-feedback">
+      Import successful!
+    </div>
+    <div class="invalid-feedback text-secondary">
+      Hold up
+    </div>
+  </div>
+</div>
+
+<div class="flex justify-around mt-4">
+  <div align="center">
+    <h1 id="a"><%= @active_outages.count %></h1>
+    <p>Outages</p>
+  </div>
+  <div align="center" class="text-black-50">
+    <h1 id="b"><%= @restorations.count %></h1>
+    <p>Restorations</p>
+  </div>
+  <div align="center" class="text-black-50">
+    <h1 id="c"><%= @avg_restore_time.presence || 0 %></h1>
+    <p>Average<br>Restore Time</p>
+  </div>
+</div>
+
+<%= render 'outages', outages: @outages %>

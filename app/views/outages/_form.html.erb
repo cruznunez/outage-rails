@@ -1,0 +1,67 @@
+<%= form_with(model: outage) do |form| %>
+  <% if outage.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(outage.errors.count, "error") %> prohibited this outage from being saved:</h2>
+
+      <ul>
+        <% outage.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :eid, style: "display: block" %>
+    <%= form.text_field :eid %>
+  </div>
+
+  <div>
+    <%= form.label :device_lat, style: "display: block" %>
+    <%= form.text_field :device_lat %>
+  </div>
+
+  <div>
+    <%= form.label :device_lng, style: "display: block" %>
+    <%= form.text_field :device_lng %>
+  </div>
+
+  <div>
+    <%= form.label :customers_affected, style: "display: block" %>
+    <%= form.number_field :customers_affected %>
+  </div>
+
+  <div>
+    <%= form.label :cause, style: "display: block" %>
+    <%= form.text_field :cause %>
+  </div>
+
+  <div>
+    <%= form.label :jurisdiction, style: "display: block" %>
+    <%= form.text_field :jurisdiction %>
+  </div>
+
+  <div>
+    <%= form.label :convex_hull, style: "display: block" %>
+    <%= form.text_field :convex_hull %>
+  </div>
+
+  <div>
+    <%= form.label :started_at, style: "display: block" %>
+    <%= form.datetime_field :started_at %>
+  </div>
+
+  <div>
+    <%= form.label :ended_at, style: "display: block" %>
+    <%= form.datetime_field :ended_at %>
+  </div>
+
+  <div>
+    <%= form.label :attempts, style: "display: block" %>
+    <%= form.number_field :attempts %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

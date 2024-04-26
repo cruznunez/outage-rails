@@ -1,0 +1,32 @@
+<table id="outages" class="table">
+  <thead>
+    <tr>
+      <th>EID</th>
+      <th>Device Lat</th>
+      <th>Device Lng</th>
+      <th>Affected</th>
+      <th>Cause</th>
+      <th>Jurisdiction</th>
+      <th>Started</th>
+      <th>Ended</th>
+      <th>Time</th>
+      <th>Requests</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% outages.each do |outage|  %>
+      <tr class="text-black-50">
+        <td><%= outage.eid %></td>
+        <td><%= outage.device_lat %></td>
+        <td><%= outage.device_lng %></td>
+        <td><%= outage.customers_affected %></td>
+        <td><%= outage.cause %></td>
+        <td><%= outage.jurisdiction %></td>
+        <td><%= outage.start %></td>
+        <td><%= outage.end %></td>
+        <td><%= outage.restoration_time %></td>
+        <td><%= outage.requests %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
