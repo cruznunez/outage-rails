@@ -69,8 +69,8 @@ class FetchOutagesJob < ApplicationJob
   def broadcast_restorations
     restorations = Outage.where.not(ended_at: nil)
     avg_time = restorations.sum { |o| o.ended_at - o.started_at } / restorations.count rescue 0
-    minutes = (avg_time / 60).to_i
     hours = (avg_time / (60 * 60)).to_i
+    minutes = (avg_time % 60).to_i
     avg_restore_time = ""
     avg_restore_time << "#{hours}h" if hours.positive?
     avg_restore_time << "#{minutes}m" if minutes.positive?
