@@ -19,20 +19,11 @@ class FetchOutagesJob < ApplicationJob
 
   def import_data
     outages = @api.outages(@jurisdiction)['data']
-    # first close any outages that are not in this dataset
-    active_outages = Outage.where(jurisdiction: @jurisdiction, ended_at: nil).to_a
-    stamp "Outage.count: #{Outage.count}"
-    stamp "current outages: #{outages.count}"
-    stamp "active_outages before: #{active_outages.count}"
-    outages.each do |outage|
-      active_outages.delete_if do |ao|
-        ao.eid == outage['sourceEventNumber']
-      end
-    end
-    stamp "Outage.count: #{Outage.count}"
-    stamp "current outages: #{outages.count}"
-    stamp "active_outages after: #{active_outages.count}"
-    active_outages.each { |ao| ao.update ended_at: Time.now }
+    # first close any outages that are not in this dataset and that have not been closed
+    outage_ids = outages.map { |o| o['sourceEventNumber'] }
+    restored = Outage.where(ended_at: nil)
+                     .where.not(eid: outage_ids)
+    restored.update ended_at: Time.now
     broadcast_restorations
 
     # then, import the outages
@@ -45,6 +36,8 @@ class FetchOutagesJob < ApplicationJob
       cause = outage['outageCause']
 
       outage = Outage.find_or_initialize_by eid: eid
+      persisted = outage.persisted?
+
       outage.eid = eid
       outage.device_lat = lat
       outage.device_lng = lng
@@ -52,12 +45,11 @@ class FetchOutagesJob < ApplicationJob
       outage.cause = cause
       outage.jurisdiction = @jurisdiction
       outage.convex_hull = hull
-      outage.started_at = Time.now unless outage.started_at?
+      outage.started_at = Time.now unless persisted
       outage.requests = outage.requests + 1
 
       outage.save
-
-      broadcast_count
+      broadcast_count unless persisted
     end
   end
 
