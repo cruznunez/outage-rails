@@ -171,7 +171,7 @@ module ImporterLogic
   #     # debugger if workout.errors.any?
   #   end
   # end
-  
+
   def stamp(message, color = :red, inline = false)
     colors = { gray: 90, red: 91, green: 92, yellow: 93, purple: 94, pink: 95, cyan: 96 }
     style = '1;5;'
@@ -184,18 +184,17 @@ module ImporterLogic
     end
   end
 
-  # def print_results
-  #   @stop = Time.now
-  #   delta = @stop - @start
-  #   rate = @total / delta
-  #   stamp "Finished in #{(delta).round 4}s"
-  #   stamp "  #{@total} total"
-  #   stamp "  #{@skipped} skipped"
-  #   stamp "  #{rate.round 1} per second"
-  #   stamp "  #{@api_time.round 2}s (#{(@api_time / delta * 100).round 2}%) waiting for API"
-  #   stamp "|#{@total}|#{@skipped}|#{delta.round 2}s|#{rate.round 1}/s|#{@api_time.round 2}s|#{(@api_time / delta * 100).round 2}%|", :green
-  # end
-  #
+  def print_results
+    @stop = Time.now
+    delta = @stop - @start
+    rate = @total / delta
+    stamp "Finished in #{(delta).round 4}s"
+    stamp "  #{@total} total"
+    stamp "  #{rate.round 1} per second"
+    stamp "  #{@api_time.round 2}s (#{(@api_time / delta * 100).round 2}%) waiting for API"
+    stamp "|#{@total}|#{delta.round 2}s|#{rate.round 1}/s|#{@api_time.round 2}s|#{(@api_time / delta * 100).round 2}%|", :green
+  end
+
   # def broadcast_status(status)
   #   icons = {
   #     working: '<i class="fa-solid fa-spinner fa-spin-pulse fa-spin"></i>',

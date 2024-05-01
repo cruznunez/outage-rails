@@ -8,17 +8,23 @@ class FetchOutagesJob < ApplicationJob
     disable_button
     broadcast_count
     import_data
+    print_results
     enable_button
   end
 
   def start_up(jurisdiction)
     @jurisdiction = jurisdiction
     @api = DukeAPI.new
+    @start = Time.now
     @stream = "outages"
+    @total = 0
   end
 
   def import_data
+    api_before = Time.now
     outages = @api.outages(@jurisdiction)['data']
+    api_after = Time.now
+    @api_time = api_after - api_before
     # first close any outages that are not in this dataset and that have not been closed
     outage_ids = outages.map { |o| o['sourceEventNumber'] }
     restored = Outage.where(ended_at: nil)
@@ -50,6 +56,7 @@ class FetchOutagesJob < ApplicationJob
 
       outage.save
       broadcast_count unless persisted
+      @total += 1
     end
   end
 
