@@ -1,0 +1,13 @@
+<h1 class="mt-4">Top Secret — DO NOT SHOW CLIENTS</h1>
+
+<p class="text-black-50">
+  <%= @outages.count %> outages, <%= @outages.sum(:customers_affected) %> customers affected.
+</p>
+
+<div id="map"></div>
+
+<script type="text/javascript">
+  document.addEventListener('turbo:load', function () {
+    routeMapper(<%= outages_hash @outages %>);
+  });
+</script>

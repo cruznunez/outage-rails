@@ -19,10 +19,10 @@ class Outage < ApplicationRecord
   def restoration_time
     return unless ended_at?
     seconds = ended_at - started_at
-    minutes = (seconds / 60).to_i
     hours = (seconds / (60 * 60)).to_i
+    minutes = (seconds % 60).to_i
     out = ""
-    out << "#{hours}hf" if hours.positive?
+    out << "#{hours}h" if hours.positive?
     out << "#{minutes}m" if minutes.positive?
 
     out

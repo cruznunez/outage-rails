@@ -84,7 +84,8 @@ class FetchOutagesJob < ApplicationJob
     active_outages = Outage.where(ended_at: nil).order(created_at: :desc)
     all_outages = Outage.order(created_at: :desc)
     broadcast_update_to @stream, target: 'a', plain: active_outages.count
-    broadcast_replace_to @stream, target: 'outages', partial: 'outages/outages', locals: { outages: all_outages }
+    # broadcast_replace_to @stream, target: 'outages', partial: 'outages/outages', locals: { outages: all_outages }
+    broadcast_replace_to @stream, target: 'outages', partial: 'outages/outages', locals: { outages: active_outages }
   end
 
   def enable_button

@@ -1,0 +1,160 @@
+/* $bzr: 0.2s cubic-bezier(0,.2,0,1); */
+
+#map {
+  height: 65vh;
+  flex-grow: 1;
+}
+/* button for closing map */
+.map-close::after {
+  color: white;
+  content: '\00D7';
+  cursor: pointer;
+  font-size: 3em;
+  position: absolute;
+  top: 0;
+  right: 1%;
+}
+.marker-defaults {
+  /* font: normal normal normal 40px/1 FontAwesome; */
+  font: normal normal normal 40px/1 "Font Awesome 6 Free";
+
+  text-align: center;
+  transition: margin 0.2s cubic-bezier(0,.2,0,1), padding 0.2s cubic-bezier(0,.2,0,1);
+  &:hover {
+    margin-top: -45px !important; /* effects whole group(marker, :before, and :after) and moves it up vertically */
+    padding-bottom: 5px; /* affects the :after psuedo element and causes marker shadow to move */
+  }
+}
+.small-marker-defaults {
+  font: normal normal normal 20px/1 FontAwesome;
+  text-align: center;
+  transition: margin $bzr, padding $bzr;
+  &:hover {
+    margin-top: -25px !important; // effects whole group(marker, :before, and :after) and moves it up vertically
+    padding-bottom: 5px; // affects the :after psuedo element and causes marker shadow to move
+  }
+}
+.marker:before, .marker:after {
+  content: "\f3c5";
+}
+.marker:after {
+  color: rgba(0, 0, 0, 0.4);
+  filter: blur(4px);
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  transform: scaleY(0.5) skewX(-20deg); // better shadow
+  transform-origin: 50% 100%;
+  z-index: -1;
+}
+
+#map .fa-solid {
+  font-size: 3em;
+  text-align: center;
+  transition: margin 0.2s cubic-bezier(0,.2,0,1), padding 0.2s cubic-bezier(0,.2,0,1);
+  &:hover {
+    margin-top: -45px !important; /* effects whole group(marker, :before, and :after) and moves it up vertically */
+    padding-bottom: 5px; /* affects the :after psuedo element and causes marker shadow to move */
+  }
+}
+/* #map .fa-solid:after {
+  content: "\f3c5";
+
+  color: rgba(0, 0, 0, 0.4);
+  filter: blur(4px);
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  transform: scaleY(0.5) skewX(-20deg); // better shadow
+  transform-origin: 50% 100%;
+  z-index: -1;
+} */
+#map .fa-solid.red {
+  color: #DC4B3E;
+  -webkit-text-stroke: 1px #B3382C;
+}
+#map .fa-solid.blue {
+  color: #4788F0;
+  -webkit-text-stroke: 1px #3261C8;
+}
+
+
+/* #map .marker, #map .house {
+  &.orange:before {
+    $oranges: #F4B22A #FD9226 #F39C12;
+    $darks: #ED9224 #d35400 #B76E19;
+    color: nth($oranges, -1);
+    -webkit-text-stroke: 1px nth($darks, -1);
+  }
+
+  &.yellow:before {
+    $yellows: #FEE964 #FEE94F #F1C40F #FDE449 #FBE305 #FFE22A;
+    $darks: #FAA239 #EAB62D #995914 #BA6C1A #C29403;
+    color: nth($yellows, -1);
+    -webkit-text-stroke: 1px nth($darks, -1);
+  }
+
+  &.green::before {
+    $greens: #86CDAC #54B889 #91CFB1 #2BA366 #2ECC71 #27AE60 #1E9C5A;
+    $darks: #167F45 #136D3A;
+    color: nth($greens, -1);
+    -webkit-text-stroke: 1px nth($darks, -1);
+  }
+
+  &.indigo:before {
+    $indigos: #C653FF #9B59B6;
+    $darks: #8E44Ad #430064 #7300AB;
+    color: nth($indigos, -1);
+    -webkit-text-stroke: 1px nth($darks, -1);
+  }
+
+  &.violet:before {
+    $violets: #F49CCC #FA95AE #F94BA9;
+    $dark: #DF2084;
+    color: nth($violets, -1);
+    -webkit-text-stroke: 1px $dark;
+  }
+
+  &.white:before {
+    color: #ECF0F1;
+    -webkit-text-stroke: 1px #95A5A6;
+  }
+
+  &.rainbow:before {
+    animation: rainbow 5s infinite;
+    color: #DC4B3E;
+    -webkit-text-stroke: 1px #B3382C;
+  }
+} */
+
+.bouncing {
+  animation: bouncing 1s infinite;
+}
+
+@keyframes rainbow {
+  0%  { color: #DC4B3E; -webkit-text-stroke: 1px #B3382C; }
+  12% { color: #F39C12; -webkit-text-stroke: 1px #B76E19; }
+  24% { color: #FFE22A; -webkit-text-stroke: 1px #C29403; }
+  36% { color: #1E9C5A; -webkit-text-stroke: 1px #136D3A; }
+  48% { color: #4788F0; -webkit-text-stroke: 1px #3261C8; }
+  60% { color: #9B59B6; -webkit-text-stroke: 1px #7300AB; }
+  72% { color: #F94BA9; -webkit-text-stroke: 1px #DF2084; }
+  84% { color: #ECF0F1; -webkit-text-stroke: 1px #95A5A6; }
+}
+
+@keyframes bouncing {
+  10% { margin-top: -45px; padding-bottom: 5px; }
+}
+
+.x-marker {
+  text-align: center;
+  &::before {
+    content: "x";
+    transform: scaleY(0.5) scaleX(1.5);
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+  }
+  &::after {
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+    padding-top: 10px;
+  }
+}
