@@ -16,7 +16,7 @@ class FetchOutagesJob < ApplicationJob
     @jurisdiction = jurisdiction
     @api = DukeAPI.new
     @start = Time.now
-    @stream = "outages"
+    @stream = 'outages'
     @total = 0
   end
 
