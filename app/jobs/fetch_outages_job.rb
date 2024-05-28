@@ -75,7 +75,7 @@ class FetchOutagesJob < ApplicationJob
     avg_restore_time << "#{minutes}m" if minutes.positive?
     avg_restore_time = avg_restore_time.presence || 0
 
-    broadcast_update_to @stream, target: 'b', plain: restorations.count
+    broadcast_update_to @stream, target: 'b', plain: restorations.count.to_fs(:delimited)
     broadcast_update_to @stream, target: 'c', plain: avg_restore_time
   end
 

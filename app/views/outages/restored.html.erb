@@ -1,0 +1,28 @@
+<div class="flex justify-between align-baseline mt-4">
+  <h1>Restored Outages</h1>
+</div>
+
+<div class="flex justify-around mt-4">
+  <div align="center">
+    <h1><%= @restored_outages.total_count.to_fs(:delimited) %></h1>
+    <p>Outages</p>
+  </div>
+  <div align="center" class="text-black-50">
+    <h1><%= @restored_outages.total_count.to_fs(:delimited) %></h1>
+    <p>Restorations</p>
+  </div>
+  <div align="center" class="text-black-50">
+    <h1><%= @avg_restore_time.presence || 0 %></h1>
+    <p>Average<br>Restore Time</p>
+  </div>
+</div>
+
+<p class="text-black-50">
+  <%= page_entries_info @restored_outages %>
+</p>
+
+<%= render 'restored_outages', outages: @restored_outages %>
+
+<div class="flex justify-around mb-4">
+  <%= paginate @restored_outages, param_name: :p, window: 3 %>
+</div>

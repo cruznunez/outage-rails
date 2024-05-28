@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root 'outages#index'
   resources :outages do
-    collection { get :fetch, :map }
+    collection { get :fetch, :map, :restored }
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

@@ -20,7 +20,7 @@
     <p>Outages</p>
   </div>
   <div align="center" class="text-black-50">
-    <h1 id="b"><%= @restorations.count %></h1>
+    <h1 id="b"><%= @restorations.count.to_fs(:delimited) %></h1>
     <p>Restorations</p>
   </div>
   <div align="center" class="text-black-50">
@@ -29,4 +29,4 @@
   </div>
 </div>
 
-<%= render 'outages', outages: @outages %>
+<%= render 'outages', outages: @active_outages %>

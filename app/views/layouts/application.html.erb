@@ -28,8 +28,8 @@
           <li class="nav-item <%= 'active' if request.path == '/outages' %>">
             <a class="nav-link" href="/outages">Home <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item <%= 'active' if request.path == '/outages/map' %>">
-            <a class="nav-link" href="#">Link</a>
+          <li class="nav-item <%= 'active' if request.path == '/outages/restored' %>">
+            <a class="nav-link" href="/outages/restored">Analytics</a>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled">Disabled</a>
@@ -45,7 +45,6 @@
           <%= yield %>
         </div>
         <div class="col-lg-1"></div>
-        <div class=""></div>
       </div>
     </div>
   </body>

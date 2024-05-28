@@ -3,8 +3,6 @@ class OutagesController < ApplicationController
 
   # GET /outages or /outages.json
   def index
-    # @outages = Outage.where(ended_at: nil).order(created_at: :desc)
-    @outages = Outage.order(created_at: :desc)
     @active_outages = Outage.where(ended_at: nil).order(created_at: :desc)
     @restorations = Outage.where.not(ended_at: nil)
     avg_time = @restorations.sum { |o| o.ended_at - o.started_at } / @restorations.count rescue 0
@@ -24,6 +22,19 @@ class OutagesController < ApplicationController
   # GET /outages/map
   def map
     @outages = Outage.where(ended_at: nil).order(created_at: :desc)
+  end
+
+  # GET /outages/restored
+  def restored
+    @restored_outages = Outage.where.not(ended_at: nil)
+                              .order(created_at: :desc)
+                              .page(params[:p])
+    avg_time = @restored_outages.sum { |o| o.ended_at - o.started_at } / @restored_outages.count rescue 0
+    hours = (avg_time / (60 * 60)).to_i
+    minutes = (avg_time % 60).to_i
+    @avg_restore_time = ""
+    @avg_restore_time << "#{hours}h" if hours.positive?
+    @avg_restore_time << "#{minutes}m" if minutes.positive?
   end
 
   # GET /outages/1 or /outages/1.json

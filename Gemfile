@@ -28,6 +28,8 @@ gem "jbuilder"
 
 gem "rspec-rails"
 gem "httparty"
+gem "kaminari"
+gem "pg"
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
