@@ -9,9 +9,13 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
+render: &render
+  url: <%= Rails.application.credentials.database_url %>
+
 development:
-  <<: *default
-  database: storage/development.sqlite3
+  # <<: *default
+  # database: storage/development.sqlite3
+  <<: *render
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

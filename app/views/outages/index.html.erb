@@ -1,10 +1,12 @@
 <%= turbo_stream_from "outages" %>
 
 <div class="flex justify-between align-baseline mt-4">
-  <h1>Outages</h1>
+  <h1><%= Outage.sqlite? ? 'SQLite' : 'Render' %> Outages</h1>
 
   <div align="right">
-    <%= link_to "Fetch", fetch_outages_path, id: 'btn', class: 'btn btn-primary', align: 'right' %>
+    <% if ActiveRecord::Base.connection.adapter_name == 'SQLite' %>
+      <%= link_to "Fetch", fetch_outages_path, id: 'btn', class: 'btn btn-primary', align: 'right' %>
+    <% end %>
     <div class="valid-feedback">
       Import successful!
     </div>
