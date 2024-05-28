@@ -1,5 +1,5 @@
 <div class="flex justify-between align-baseline mt-4">
-  <h1>Restored Outages</h1>
+  <h1><%= Outage.sqlite? ? 'SQLite' : 'Render' %> Restored Outages</h1>
 </div>
 
 <div class="flex justify-around mt-4">

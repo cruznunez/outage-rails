@@ -1,0 +1,20 @@
+<h1>Average Restoration by FIPS</h1>
+
+<table id="outages" class="table mt-4">
+  <thead>
+    <tr>
+      <th>Block FIPS</th>
+      <th>Outages</th>
+      <th>Avg Restoration Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @fips.each do |record|  %>
+      <tr class="text-black-50">
+        <td><%= record.block_fips.to_i %></td>
+        <td><%= record.outage_count %></td>
+        <td><%= Outage.format_duration record.avg_restoration_time %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
