@@ -55,7 +55,7 @@ class OutagesController < ApplicationController
 
   def fips
     redirect_to root_path if Outage.sqlite?
-    @fips = Outage.average_restoration_time_by_fips
+    @fips = Outage.average_restoration_time_by_fips.page params[:p]
   end
 
   # GET /outages/1 or /outages/1.json

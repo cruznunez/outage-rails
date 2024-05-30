@@ -8,8 +8,8 @@
     <p>Outages</p>
   </div>
   <div align="center" class="text-black-50">
-    <h1><%= @restored_outages.total_count.to_fs(:delimited) %></h1>
-    <p>Restorations</p>
+    <h1><%= @restored_outages.pluck(:jurisdiction).uniq.count.to_fs(:delimited) %></h1>
+    <p>Jurisdictions</p>
   </div>
   <div align="center" class="text-black-50">
     <h1><%= @avg_restore_time.presence || 0 %></h1>

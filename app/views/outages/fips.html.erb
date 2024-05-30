@@ -1,5 +1,9 @@
 <h1>Average Restoration by FIPS</h1>
 
+<p class="text-black-50">
+  <%= page_entries_info @fips %>
+</p>
+
 <table id="outages" class="table mt-4">
   <thead>
     <tr>
@@ -18,3 +22,7 @@
     <% end %>
   </tbody>
 </table>
+
+<div class="flex justify-around mb-4">
+  <%= paginate @fips, param_name: :p, window: 3 %>
+</div>
