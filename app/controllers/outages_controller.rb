@@ -3,8 +3,13 @@ class OutagesController < ApplicationController
 
   # GET /outages or /outages.json
   def index
-    @active_outages = Outage.where(ended_at: nil).order(created_at: :desc)
-    @restorations = Outage.where.not(ended_at: nil)
+    if Outage.sqlite?
+      @active_outages = Outage.where(ended_at: nil).order(id: :desc)
+      @restorations = Outage.where.not(ended_at: nil)
+    else
+      @active_outages = Outage.where(outage_restored: false)
+      @restorations = Outage.where(outage_restored: true)
+    end
     avg_time = @restorations.sum { |o| o.ended_at - o.started_at } / @restorations.count rescue 0
     hours = (avg_time / (60 * 60)).to_i
     minutes = (avg_time % 60).to_i
@@ -21,20 +26,36 @@ class OutagesController < ApplicationController
 
   # GET /outages/map
   def map
-    @outages = Outage.where(ended_at: nil).order(created_at: :desc)
+    if Outage.sqlite?
+      @outages = Outage.where(ended_at: nil).order(created_at: :desc)
+    else
+      @outages = Outage.where(outage_restored: false)
+    end
   end
 
   # GET /outages/restored
   def restored
-    @restored_outages = Outage.where.not(ended_at: nil)
-                              .order(created_at: :desc)
-                              .page(params[:p])
+    if Outage.sqlite?
+      @restored_outages = Outage.where.not(ended_at: nil)
+                                .order(created_at: :desc)
+                                .page(params[:p])
+    else
+      @restored_outages = Outage.where(outage_restored: true)
+                                .order(started_at: :desc)
+                                .page(params[:p])
+    end
+
     avg_time = @restored_outages.sum { |o| o.ended_at - o.started_at } / @restored_outages.count rescue 0
     hours = (avg_time / (60 * 60)).to_i
     minutes = (avg_time % 60).to_i
     @avg_restore_time = ""
     @avg_restore_time << "#{hours}h" if hours.positive?
     @avg_restore_time << "#{minutes}m" if minutes.positive?
+  end
+
+  def fips
+    redirect_to root_path if Outage.sqlite?
+    @fips = Outage.average_restoration_time_by_fips.page params[:p]
   end
 
   # GET /outages/1 or /outages/1.json
